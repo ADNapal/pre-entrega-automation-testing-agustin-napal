@@ -1,0 +1,1 @@
+# Archivo con funciones auxiliares para reutilizar
