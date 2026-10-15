@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 
 #informacion para compartir los driver en cada test, comunica el codigo con el navegador
-@pytest.fixture
+@pytest.fixture(scope="module")
 def driver():
     service = Service(GeckoDriverManager().install())
     driver = webdriver.Firefox(service=service)
@@ -27,3 +27,20 @@ def test_01_login(driver):
     driver.find_element(By.ID, "login-button").click()
 
     assert "/inventory.html" in driver.current_url , "ERROR: No se redirigir a la pagina objetivo."
+
+#verificar los titulos
+def test_02A_verificar_titulo_ventana(driver):
+
+    page_titel= driver.title
+
+    assert page_titel == "Swag Labs" , "ERROR: El titulo de la ventana no es 'Swag Labs'."
+
+def test_02B_verificar_titulo_section(driver):
+
+    section_titel= driver.find_element(By.CLASS_NAME, 'title').text
+
+    assert section_titel == "Products" , "ERROR: El titulo de la secion no es 'Products'."
+
+#comprobar existencia de productos en pagina
+
+#validar elementos importantes en interfas
