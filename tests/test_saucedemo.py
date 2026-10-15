@@ -42,5 +42,27 @@ def test_02B_verificar_titulo_section(driver):
     assert section_titel == "Products" , "ERROR: El titulo de la secion no es 'Products'."
 
 #comprobar existencia de productos en pagina
+def test_03_comprobar_elementos(driver):
+    inventario_items = driver.find_elements(By.CLASS_NAME, 'inventory_list') #busca un contenedor padre con varios elementos
+    #comprueba si el contenedor tiene elementos.
+    assert len(inventario_items) > 0 , "ERROR: no se encontro productos visibles"
 
 #validar elementos importantes en interfas
+def test_04_comprobar_interfaz(driver):
+
+    menu_button = driver.find_element(By.ID, 'react-burger-menu-btn')
+    bar_filtro = driver.find_element(By.CLASS_NAME, 'product_sort_container')
+
+    assert menu_button.is_displayed , "ERROR: el menu no esta visible"
+    assert bar_filtro.is_displayed , "ERROR: el filtro no esta visible"
+
+def test_05_agregar_producto_carrito(driver):
+
+    first_item= driver.find_elements(By.CLASS_NAME, 'inventory_item')[0]
+
+    boton_agregar= first_item.find_element(By.TAG_NAME, 'button')
+    boton_agregar.click()
+
+    assert boton_agregar.text.capitalize() == 'Remove' , 'ERROR: el boton no cambio a "Remove"'
+
+ 
